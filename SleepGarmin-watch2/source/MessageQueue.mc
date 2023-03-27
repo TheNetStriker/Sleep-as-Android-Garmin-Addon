@@ -24,10 +24,10 @@ class MessageQueue {
 
         var freeMemRatio = Sys.getSystemStats().freeMemory*100/Sys.getSystemStats().totalMemory;
 
-        DebugManager.log("free: " + Sys.getSystemStats().freeMemory + " ratio:" + freeMemRatio + " q size:" + queue.size());
+        //DebugManager.log("free: " + Sys.getSystemStats().freeMemory + " ratio:" + freeMemRatio + " q size:" + queue.size());
 
         if (((freeMemRatio <= 65) && (queue.size() > 0)) || (queue.size() > 30)) {
-            DebugManager.log("Rem from q, freeRatio:" + freeMemRatio + ",q:" + queue.size());
+            //DebugManager.log("Rem from q, freeRatio:" + freeMemRatio + ",q:" + queue.size());
             queue.remove(queue[0]);
         }
 		

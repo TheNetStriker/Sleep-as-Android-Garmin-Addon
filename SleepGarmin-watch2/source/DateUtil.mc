@@ -18,11 +18,11 @@ class DateUtil {
 	
 	static function msTimestampToHHMM(timestampMs) {
 		if (timestampMs instanceof Lang.Long) {
-			DebugManager.log("msTimestampToHHMM: " + timestampMs);
+			//DebugManager.log("msTimestampToHHMM: " + timestampMs);
 			var mom = DateUtil.convertMsTsToMoment(timestampMs);
 			return DateUtil.momentToHHMM(mom);
 		} else {		
-			DebugManager.log("msTimestampToHHMM NOT: " + timestampMs);
+			//DebugManager.log("msTimestampToHHMM NOT: " + timestampMs);
 			return timestampMs;
 		}
 	}

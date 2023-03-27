@@ -13,14 +13,14 @@ class CommListener extends Comm.ConnectionListener {
     }
 
     function onComplete() {
-    	DebugManager.log("CommListener onComplete");
+    	//DebugManager.log("CommListener onComplete");
 		queue.removeFirst();
     	self.ctx.state.deliveryInProgress = false;
     	self.ctx.commManager.triggerSend();
     }
 
     function onError() {
-    	DebugManager.log("CommListener onError");
+    	//DebugManager.log("CommListener onError");
     	self.ctx.state.deliveryInProgress = false;
     	self.ctx.state.deliveryErrorCount++;
     }

@@ -12,7 +12,7 @@ class Sleep2App extends Application.AppBase {
 
     // onStart() is called on application start up
     function onStart(state) {
-        DebugManager.log("----- App onStart ------");
+        //DebugManager.log("----- App onStart ------");
         self.ctx = new Context();
         
         // init comms

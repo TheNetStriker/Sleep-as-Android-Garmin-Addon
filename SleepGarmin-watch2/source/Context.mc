@@ -9,7 +9,7 @@ class Context {
     var featureFlags;
 
     function initialize() {
-        DebugManager.log("Context initialized");
+        //DebugManager.log("Context initialized");
         // TODO create all instances needed
         self.featureFlags = new FeatureFlags();
         self.state = new State();

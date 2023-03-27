@@ -21,14 +21,14 @@ class SensorManager {
 	var lastOximeterReadingSec = 0;
 
     function initialize(ctx) {
-        DebugManager.log("SensorManager initialized");
+        //DebugManager.log("SensorManager initialized");
         self.ctx = ctx;
-        var maxSampleRate = Sensor.getMaxSampleRate();
-        DebugManager.log("MaxSampleRate " + maxSampleRate);
+        //var maxSampleRate = Sensor.getMaxSampleRate();
+        //DebugManager.log("MaxSampleRate " + maxSampleRate);
     }
 
     function start() {
-        DebugManager.log("SensorManager startAccelerometer");
+        //DebugManager.log("SensorManager startAccelerometer");
 
 		var options = {
 			:period => SENSOR_PERIOD_SEC,
@@ -45,22 +45,22 @@ class SensorManager {
 
     // argument is of type SensorData
     function onData(sensorData) {
-        DebugManager.log("SensorManager onData");
+        //DebugManager.log("SensorManager onData");
         
         if (self.ctx.state.tracking) {
 	        onAccelData(sensorData.accelerometerData.x, sensorData.accelerometerData.y, sensorData.accelerometerData.z);
 	        
-	        if (sensorData has :heartRateData && sensorData.heartRateData != null) {
-	 	    	onHRData(sensorData.heartRateData.heartBeatIntervals);
-			}	
+	        // if (sensorData has :heartRateData && sensorData.heartRateData != null) {
+	 	    // 	onHRData(sensorData.heartRateData.heartBeatIntervals);
+			// }	
 			
-			if (lastOximeterReadingSec >= OXI_READING_PERIOD_SEC) {
-				lastOximeterReadingSec = 0;
-				var sensorInfo = Sensor.getInfo();
-			    if (sensorInfo has :oxygenSaturation && sensorInfo.oxygenSaturation != null) {
-		    	    onOxyData(sensorInfo.oxygenSaturation);		    	    
-			    }
-			}
+			// if (lastOximeterReadingSec >= OXI_READING_PERIOD_SEC) {
+			// 	lastOximeterReadingSec = 0;
+			// 	var sensorInfo = Sensor.getInfo();
+			//     if (sensorInfo has :oxygenSaturation && sensorInfo.oxygenSaturation != null) {
+		    // 	    onOxyData(sensorInfo.oxygenSaturation);		    	    
+			//     }
+			// }
 			lastOximeterReadingSec = lastOximeterReadingSec + SENSOR_PERIOD_SEC;
         }
         
@@ -68,7 +68,7 @@ class SensorManager {
     }
 
     function onAccelData(xArr,yArr,zArr) {
-    	DebugManager.log("onAccelData");
+    	//DebugManager.log("onAccelData");
 //        DebugManager.logf("sizes x: $1$ y: $2$ z: $3$", [xArr.size(), yArr.size(), zArr.size()]);
         
         accXBuf.addAll(xArr);        
@@ -94,7 +94,7 @@ class SensorManager {
     }
     
     function addToAccBatch(aggregate) {
-    	DebugManager.log("addToAccBatch");
+    	//DebugManager.log("addToAccBatch");
     	accBatch.add(aggregate);
     	if (accBatch.size() >= self.ctx.state.getBatchSize()) {
     		self.ctx.businessManager.sendAccData(accBatch);
@@ -104,7 +104,7 @@ class SensorManager {
     
     // Gathers both rr intervals and computes hr
     function onHRData(heartBeatIntervalsArray) {
-    	DebugManager.log("OnHRData");
+    	//DebugManager.log("OnHRData");
 //    	DebugManager.log("HeartIntervals " + heartBeatIntervalsArray);
 
     	// Intervals are in ms
@@ -114,8 +114,7 @@ class SensorManager {
         
         rrIntervalsBuf.addAll(heartBeatIntervalsArray);
         if (rrIntervalsBuf.size() > 120) {
-	    	DebugManager.log("OnHRData rrIntervalBuf>120");
-
+	    	//DebugManager.log("OnHRData rrIntervalBuf>120");
         	rrIntervalsBuf.add(System.getTimer());
     		self.ctx.businessManager.sendRrIntervalsData(rrIntervalsBuf);
     		rrIntervalsBuf = [];        
@@ -123,14 +122,14 @@ class SensorManager {
         
     	hrBuf.add(latestHr);
     	if (hrBuf.size() > (60 / SENSOR_PERIOD_SEC)) { // Minute divided by period 
-	    	DebugManager.log("OnHRData hrBuf>12");
+	    	//DebugManager.log("OnHRData hrBuf>12");
     		self.ctx.businessManager.sendHrData(DataUtil.median(hrBuf));
     		hrBuf = [];
     	}
     }
     
     function onOxyData(spo2) {
-    	DebugManager.log("onOxyData");
+    	//DebugManager.log("onOxyData");
     	
         spo2buf.add(spo2);
         if (spo2buf.size() > 120 / OXI_READING_PERIOD_SEC) {

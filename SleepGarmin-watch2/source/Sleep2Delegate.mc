@@ -10,7 +10,7 @@ class Sleep2Delegate extends WatchUi.BehaviorDelegate {
     }
 
     function onMenu() {
-    	DebugManager.log("onMenu");
+    	//DebugManager.log("onMenu");
     	if (self.ctx.state.screenLocked) {
     		self.ctx.businessManager.unlockScreen();
     		return true;

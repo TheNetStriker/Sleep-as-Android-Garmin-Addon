@@ -8,7 +8,7 @@ function less_than(a, b) {
 class DataUtil {
 
 	static function hrFromBeatIntervals(beatIntervalArray) {
-		DebugManager.log("hrFromBeatIntervals");
+		//DebugManager.log("hrFromBeatIntervals");
 		
 		var med = median(beatIntervalArray);
 		if (med == null) { return null; }

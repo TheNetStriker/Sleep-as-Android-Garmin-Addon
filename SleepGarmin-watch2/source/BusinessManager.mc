@@ -13,9 +13,9 @@ class BusinessManager {
  	
  	// Hook that is called on every data received callback - we use this so that we do not have to have our own Timer, which is presumably battery intensive.
  	function onDataHook() {
- 		DebugManager.log("BusinessManager onDataHook");
+ 		//DebugManager.log("BusinessManager onDataHook");
  		self.ctx.commManager.triggerSend();
- 		updateTime(true);
+ 		updateTime();
  		lockScreen();
  	}
  	
@@ -48,15 +48,15 @@ class BusinessManager {
  	}
  	
  	function sendHrData(hr) {
- 		DebugManager.log("sendHrData " + hr);
+ 		//DebugManager.log("sendHrData " + hr);
  		self.ctx.commManager.enqueue([CommManager.MSG_HR, hr]); 		
  	}
  	function sendRrIntervalsData(rr) {
- 		DebugManager.log("sendRrData " + rr);
- 		self.ctx.commManager.enqueue([CommManager.MSG_RR, rr.toString()]); 	
+ 		//DebugManager.log("sendRrData " + rr);
+ 		self.ctx.commManager.enqueue([CommManager.MSG_RR, rr]); 	
  	}
  	function sendOxyData(oxygenSaturation) {
- 		self.ctx.commManager.enqueue([CommManager.MSG_OXY, oxygenSaturation.toString()]);
+ 		self.ctx.commManager.enqueue([CommManager.MSG_OXY, oxygenSaturation]);
  	}
  	
  	function sendPause() {
@@ -97,30 +97,22 @@ class BusinessManager {
  		self.ctx.state.setBatchSize(size);
  	}
  	
- 	function updateTime(updateUi) {
- 		self.ctx.state.updateTime();
- 		if (updateUi) { WatchUi.requestUpdate(); }
+ 	function updateTime() {
+ 		var timeChanged = self.ctx.state.updateTime();
+ 		if (timeChanged) { WatchUi.requestUpdate(); }
  	}
  	
  	function setAlarmTime(time, updateUi) {
- 		DebugManager.log("BusinessManager setAlarmTime: " + time);
+ 		//DebugManager.log("BusinessManager setAlarmTime: " + time);
  		self.ctx.state.updateAlarmTime(time);
  		if (updateUi) { WatchUi.requestUpdate(); }
  	}
-
-	function isAroundAlarm() {
-		if (self.ctx.state.alarmTime instanceof Lang.Long) {
-			return (System.getTimer() > (self.ctx.state.alarmTime - 60000));
-		} else {
-			return false;
-		}
-	}
  	
  	function unlockScreen() {
  		if (self.ctx.state.screenLocked) {
 			self.ctx.state.screenLocked = false;
 			self.ctx.state.screenLockedAt = System.getTimer();
-	 		DebugManager.log("UnlockScreen");
+	 		//DebugManager.log("UnlockScreen");
 	 		WatchUi.requestUpdate();
 	 	}
  	}
@@ -133,7 +125,7 @@ class BusinessManager {
  	}
  	
  	function exit() {
- 		DebugManager.log("BusinessManager exit");
+ 		//DebugManager.log("BusinessManager exit");
  		System.exit();
  	}
 

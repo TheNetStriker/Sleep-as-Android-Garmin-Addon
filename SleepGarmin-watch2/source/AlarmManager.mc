@@ -24,6 +24,7 @@ class AlarmManager {
 	    alarmDelayTimerRunning = false;
 		self.ctx.businessManager.switchToAlarmScreen();
 		self.ctx.alarmManager.startAlarmVibration();
+		self.ctx.state.updateIsAlarmRunning(true);
 	}
 	
 	function startAlarm(delay) {
@@ -43,6 +44,7 @@ class AlarmManager {
 
 		self.ctx.alarmManager.stopAlarmVibration();
 		self.ctx.businessManager.backToMainScreen();
+		self.ctx.state.updateIsAlarmRunning(false);
 	}
 
 	function cancelAlarms() {
